@@ -42,7 +42,7 @@ class App extends Component {
     this.state = {
       input: '',
       imageUrl: '',
-      box: {},
+      boxes: [],
       route: 'signin',
       isSignedIn: false,
       user: {
@@ -67,9 +67,15 @@ class App extends Component {
     });
   };
 
-  calculateFaceLocation = data => {
-    const clarifaiFace =
-      data.outputs[0].data.regions[0].region_info.bounding_box;
+  getFaceLocations = data => {
+    const regions = data.outputs[0].data.regions;
+    return regions.map(region => {
+      return this.calculateFaceLocation(region);
+    });
+  };
+
+  calculateFaceLocation = region => {
+    const clarifaiFace = region.region_info.bounding_box;
     const image = document.getElementById('inputimage');
     const width = Number(image.width);
     const height = Number(image.height);
@@ -83,8 +89,8 @@ class App extends Component {
     };
   };
 
-  displayFaceBox = box => {
-    this.setState({ box });
+  displayFaceBoxes = boxes => {
+    this.setState({ boxes });
   };
 
   onInputChange = event => {
@@ -93,7 +99,7 @@ class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.input });
-    fetch('https://ancient-depths-39946.herokuapp.com/imageurl', {
+    fetch('http://localhost:3000/imageurl', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -103,7 +109,7 @@ class App extends Component {
       .then(response => response.json())
       .then(response => {
         if (response) {
-          fetch('https://ancient-depths-39946.herokuapp.com/image', {
+          fetch('http://localhost:3000/image', {
             method: 'put',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -121,7 +127,7 @@ class App extends Component {
             })
             .catch(console.log);
         }
-        this.displayFaceBox(this.calculateFaceLocation(response));
+        this.displayFaceBoxes(this.getFaceLocations(response));
 
         // response.outputs[0].data.regions[0].region_info.bounding_box
       })
@@ -138,7 +144,7 @@ class App extends Component {
   };
 
   render() {
-    const { isSignedIn, imageUrl, route, box } = this.state;
+    const { isSignedIn, imageUrl, route, boxes } = this.state;
     return (
       <div className="App">
         <Particles className="particles" params={particlesOptions} />
@@ -157,7 +163,9 @@ class App extends Component {
               onInputChange={this.onInputChange}
               onButtonSubmit={this.onButtonSubmit}
             />
-            <FaceRecognition box={box} imageUrl={imageUrl} />
+
+            {/* {console.log(this.getFaceLocations())} */}
+            <FaceRecognition boxes={boxes} imageUrl={imageUrl} />
           </>
         ) : route === 'signin' ? (
           <Signin onRouteChange={this.onRouteChange} loadUser={this.loadUser} />
