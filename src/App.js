@@ -98,6 +98,7 @@ class App extends Component {
   };
 
   onButtonSubmit = () => {
+    this.setState({ boxes: [] });
     this.setState({ imageUrl: this.state.input });
     fetch('http://localhost:3000/imageurl', {
       method: 'post',
