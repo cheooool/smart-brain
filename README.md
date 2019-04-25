@@ -1,3 +1,8 @@
-#Smart brain
+# Smart brain
 
-사진안에 얼굴을 찾아주는 기능
+사진안의 얼굴 인식 기능
+
+## 사용 기술
+
+- React
+- Clarifai
