@@ -6,3 +6,7 @@
 
 - React
 - Clarifai
+- node/express
+- postgress/knex
+
+[Smart-brain-api](https://github.com/cheooool/smart-brain-api)
