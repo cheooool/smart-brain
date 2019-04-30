@@ -5,6 +5,7 @@
   "dependencies": {
     "clarifai": "^2.9.0",
     "dotenv": "^7.0.0",
+    "normalize.css": "^8.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-particles-js": "^2.5.1",
