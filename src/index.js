@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'tachyons';
+import dotenv from 'dotenv';
+dotenv.config();
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
