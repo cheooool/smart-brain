@@ -1,25 +1,43 @@
 import React, { Component } from 'react';
-import Particles from 'react-particles-js';
-import Navigation from './components/Navigation/Navigation';
-import FaceRecognition from './components/FaceRecognition/FaceRecognition';
-import Logo from './components/Logo/Logo';
-import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
-import Signin from './components/Signin/Signin';
-import Register from './components/Register/Register';
-import Rank from './components/Rank/Rank';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import styled from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
+
+import AuthContainer from './components/Auth/AuthContainer';
+import Signin from './components/Auth/Signin';
+import FaceRecognition from './components/FaceRecognition/FaceRecognitionContainer';
+
+// import Particles from 'react-particles-js';
+// import Navigation from './components/Navigation/Navigation';
+// import FaceRecognition from './components/FaceRecognition/FaceRecognition';
+// import Logo from './components/Logo/Logo';
+// import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
+// import Rank from './components/Rank/Rank';
 import './App.css';
 
-const particlesOptions = {
-  particles: {
-    number: {
-      value: 120,
-      density: {
-        enable: true,
-        value_area: 800
-      }
-    }
+const GlobalStyle = createGlobalStyle`
+  html {
+    height: 100%;
   }
-};
+  body {
+    font-family: 'Nanum Gothic', sans-serif;
+    font-size: 16px;
+    line-height: 1.3em;
+    background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+`;
+
+// const particlesOptions = {
+//   particles: {
+//     number: {
+//       value: 120,
+//       density: {
+//         enable: true,
+//         value_area: 800
+//       }
+//     }
+//   }
+// };
 
 const initialState = {
   input: '',
@@ -146,16 +164,38 @@ class App extends Component {
 
   render() {
     const { isSignedIn, imageUrl, route, boxes } = this.state;
+    console.log(this.state.user);
     return (
       <div className="App">
-        <Particles className="particles" params={particlesOptions} />
-        <Navigation
+        <GlobalStyle />
+        <Router>
+          <Route
+            path="/login"
+            component={props => (
+              <AuthContainer {...props} loadUser={this.loadUser} />
+            )}
+          />
+          <Route
+            path="/register"
+            component={props => (
+              <AuthContainer {...props} loadUser={this.loadUser} />
+            )}
+          />
+          <PrivateRoute
+            exact
+            path="/"
+            component={FaceRecognition}
+            authenticated={this.state.user.id !== ''}
+          />
+        </Router>
+        {/* <Particles className="particles" params={particlesOptions} /> */}
+        {/* <Navigation
           isSignedIn={isSignedIn}
           onRouteChange={this.onRouteChange}
-        />
-        {route === 'home' ? (
-          <>
-            <Logo />
+        /> */}
+        {/* {route === 'home' ? ( */}
+        {/* <> */}
+        {/* <Logo />
             <Rank
               name={this.state.user.name}
               entries={this.state.user.entries}
@@ -165,20 +205,36 @@ class App extends Component {
               onButtonSubmit={this.onButtonSubmit}
             />
 
-            {/* {console.log(this.getFaceLocations())} */}
-            <FaceRecognition boxes={boxes} imageUrl={imageUrl} />
-          </>
-        ) : route === 'signin' ? (
-          <Signin onRouteChange={this.onRouteChange} loadUser={this.loadUser} />
-        ) : (
-          <Register
-            onRouteChange={this.onRouteChange}
-            loadUser={this.loadUser}
-          />
-        )}
+            <FaceRecognition boxes={boxes} imageUrl={imageUrl} /> */}
+        {/* </> */}
+        {/* ) : route === 'signin' ? ( */}
+        {/* // <Signin onRouteChange={this.onRouteChange} loadUser={this.loadUser} /> */}
+        {/* ) : ( */}
+        {/* // <Register
+          //   onRouteChange={this.onRouteChange}
+          //   loadUser={this.loadUser}
+          // /> */}
+        {/* // )} */}
       </div>
     );
   }
 }
 
+const PrivateRoute = ({ component: Component, authenticated, ...rest }) => (
+  <Route
+    {...rest}
+    render={props =>
+      authenticated ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+          to={{
+            pathname: '/login',
+            state: { from: props.location }
+          }}
+        />
+      )
+    }
+  />
+);
 export default App;
