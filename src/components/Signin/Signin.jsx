@@ -66,6 +66,7 @@ class Signin extends React.Component {
               id="signInEmail"
               placeholder="Email"
               title="Email"
+              autoComplete="off"
               onChange={this.onInputChange}
             />
           </Field>
@@ -75,6 +76,7 @@ class Signin extends React.Component {
               name="signInPassword"
               id="signInPassword"
               placeholder="Password"
+              autoComplete="off"
               onChange={this.onInputChange}
             />
           </Field>
