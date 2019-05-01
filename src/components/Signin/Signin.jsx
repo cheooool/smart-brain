@@ -1,9 +1,14 @@
 import React from 'react';
-import Anchor from '../shared/Anchor';
-import { Form, Legend, Fieldset, FormField } from '../shared/Forms';
-import Text from '../shared/Text';
-import TextInput from '../shared/TextInput';
-import Button from '../shared/Button';
+import {
+  Anchor,
+  Text,
+  TextInput,
+  Button,
+  Form,
+  Fieldset,
+  Legend,
+  Field
+} from '../shared';
 
 class Signin extends React.Component {
   constructor(props) {
@@ -54,7 +59,7 @@ class Signin extends React.Component {
       <Form onSubmit={this.onSubmitSignIn}>
         <Fieldset>
           <Legend>SIGN IN</Legend>
-          <FormField>
+          <Field>
             <TextInput
               type="email"
               name="signInEmail"
@@ -63,8 +68,8 @@ class Signin extends React.Component {
               title="Email"
               onChange={this.onInputChange}
             />
-          </FormField>
-          <FormField>
+          </Field>
+          <Field>
             <TextInput
               type="password"
               name="signInPassword"
@@ -72,7 +77,7 @@ class Signin extends React.Component {
               placeholder="Password"
               onChange={this.onInputChange}
             />
-          </FormField>
+          </Field>
         </Fieldset>
         <Button type="submit">Sign In</Button>
         <Text size="0.875em">
