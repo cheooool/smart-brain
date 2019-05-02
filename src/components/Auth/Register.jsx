@@ -27,7 +27,7 @@ class Register extends React.Component {
     });
   };
 
-  onSubmit = async e => {
+  onSubmit = e => {
     e.preventDefault();
 
     this.props.onRegister({
