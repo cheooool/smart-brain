@@ -1,21 +1,18 @@
 import React from 'react';
-import Tilt from 'react-tilt';
-import './Logo.css';
+import styled from 'styled-components';
 import brain from './icons8-brain-52.png';
+
+const LogoBox = styled.div`
+  width: 52px;
+  height: 52px;
+  margin: 1em;
+`;
 
 const Logo = () => {
   return (
-    <div className="ma4 mt0">
-      <Tilt
-        className="Tilt br2 shadow-2"
-        options={{ max: 55 }}
-        style={{ height: 150, width: 150 }}
-      >
-        <div className="Tilt-inner pa3">
-          <img style={{ paddingTop: '5px' }} src={brain} alt="logo" />
-        </div>
-      </Tilt>
-    </div>
+    <LogoBox>
+      <img src={brain} alt="logo" />
+    </LogoBox>
   );
 };
 
