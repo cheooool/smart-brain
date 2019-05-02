@@ -1,7 +1,8 @@
 import {
   AUTHENTICATED_SUCCESS,
   AUTHENTICATED_FAILED,
-  AUTHENTICATED_PENDING
+  AUTHENTICATED_PENDING,
+  UNAUTHENTICATED
 } from '../actions/auth';
 
 const initialState = {
@@ -26,6 +27,8 @@ const AuthReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         pending: false
       });
+    case UNAUTHENTICATED:
+      return initialState;
     default:
       return state;
   }

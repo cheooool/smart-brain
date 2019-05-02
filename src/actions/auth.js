@@ -4,6 +4,7 @@ import api from '../api';
 export const AUTHENTICATED_SUCCESS = 'AUTHENTICATED_SUCCESS';
 export const AUTHENTICATED_FAILED = 'AUTHENTICATED_FAILED';
 export const AUTHENTICATED_PENDING = 'AUTHENTICATED_PENDING';
+export const UNAUTHENTICATED = 'UNAUTHENTICATED';
 
 export const signInAction = ({ email, password }) => async dispatch => {
   dispatch({ type: AUTHENTICATED_PENDING });
@@ -42,4 +43,10 @@ export const registerAction = ({ name, email, password }) => async dispatch => {
       type: AUTHENTICATED_FAILED
     });
   }
+};
+
+export const signOutAction = () => {
+  return {
+    type: UNAUTHENTICATED
+  };
 };

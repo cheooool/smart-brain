@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { signOutAction } from '../../actions/auth';
 import Header from '../Header/Header';
 import ImageLinkForm from '../ImageLinkForm/ImageLinkForm';
 import FaceRecognition from './FaceRecognition';
@@ -114,10 +116,11 @@ class FaceRecognitionContainer extends Component {
   };
 
   render() {
+    const { onSignOut } = this.props;
     const { loading, boxes, imageUrl, linkInput } = this.state;
     return (
       <>
-        <Header />
+        <Header onSignOut={onSignOut} />
         <ImageLinkForm
           value={linkInput}
           onInputChange={this.onInputChange}
@@ -137,4 +140,12 @@ class FaceRecognitionContainer extends Component {
   }
 }
 
-export default FaceRecognitionContainer;
+const mapDispatchToProps = dispatch => {
+  return {
+    onSignOut: () => dispatch(signOutAction())
+  };
+};
+export default connect(
+  null,
+  mapDispatchToProps
+)(FaceRecognitionContainer);
