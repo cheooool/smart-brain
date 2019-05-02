@@ -23,7 +23,7 @@ const DetectButton = styled(Button)`
   padding: 0.5em;
 `;
 
-const ImageLinkForm = ({ onInputChange, onDetectSubmit }) => {
+const ImageLinkForm = ({ value, onDetectSubmit, onInputChange }) => {
   return (
     <LinkWrapper>
       <LinkForm onSubmit={onDetectSubmit}>
@@ -32,6 +32,7 @@ const ImageLinkForm = ({ onInputChange, onDetectSubmit }) => {
           name="linkInput"
           id="linkInput"
           placeholder="Image Url..."
+          value={value}
           onChange={onInputChange}
         />
         <DetectButton type="submit">Detect</DetectButton>
