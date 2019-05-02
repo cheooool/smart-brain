@@ -104,7 +104,7 @@ class FaceRecognitionContainer extends Component {
           onInputChange={this.onInputChange}
           onDetectSubmit={this.onDetectSubmit}
         />
-        <FaceRecognition boxes={boxes} imageUrl={imageUrl} />
+        {imageUrl && <FaceRecognition boxes={boxes} imageUrl={imageUrl} />}
         {boxes.length > 0 && <DetectCounter counter={boxes.length} />}
       </>
     );
