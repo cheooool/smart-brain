@@ -35,7 +35,10 @@ const SpinnerRect = styled.div`
   animation-delay: ${props => (props.delay ? props.delay : '-1s')} !important;
 `;
 
-const Spinner = () => {
+const Spinner = ({ visible }) => {
+  if (!visible) {
+    return null;
+  }
   return (
     <SpinnerWrapper>
       <SpinnerRect delay="-1.2s" />

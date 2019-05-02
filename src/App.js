@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 
 import Particles from 'react-particles-js';
 import AuthContainer from './components/Auth/AuthContainer';
 import FaceRecognitionContainer from './components/FaceRecognition/FaceRecognitionContainer';
-import './App.css';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -41,54 +41,19 @@ const particlesOptions = {
 };
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      user: {
-        id: '',
-        name: '',
-        email: '',
-        entries: 0,
-        joined: ''
-      }
-    };
-  }
-
-  loadUser = data => {
-    this.setState({
-      user: {
-        id: data.id,
-        name: data.name,
-        email: data.email,
-        entries: data.entries,
-        joined: data.joined
-      }
-    });
-  };
-
-  updateUser = user => {
-    this.setState({
-      user
-    });
-  };
-
   render() {
-    const { user } = this.state;
+    const { authenticated } = this.props;
     return (
       <div className="App">
         <GlobalStyle />
         <Router>
           <Route
             path="/login"
-            component={props => (
-              <AuthContainer {...props} loadUser={this.loadUser} />
-            )}
+            component={props => <AuthContainer {...props} />}
           />
           <Route
             path="/register"
-            component={props => (
-              <AuthContainer {...props} loadUser={this.loadUser} />
-            )}
+            component={props => <AuthContainer {...props} />}
           />
           <PrivateRoute
             exact
@@ -97,12 +62,11 @@ class App extends Component {
               return (
                 <FaceRecognitionContainer
                   {...props}
-                  user={user}
                   updateUser={this.updateUser}
                 />
               );
             }}
-            authenticated={this.state.user.id !== ''}
+            authenticated={authenticated}
           />
         </Router>
         <ParticlesWrapper params={particlesOptions} />
@@ -128,4 +92,11 @@ const PrivateRoute = ({ component: Component, authenticated, ...rest }) => (
     }
   />
 );
-export default App;
+
+const mapStateToProps = state => {
+  return {
+    authenticated: state.authReducer.authenticated
+  };
+};
+
+export default connect(mapStateToProps)(App);

@@ -15,11 +15,13 @@ const SignoutButton = styled(Button)`
   font-size: 0.75em;
 `;
 
-const Header = () => {
+const Header = ({ onSignOut }) => {
   return (
     <HeaderWrapper>
       <Logo />
-      <SignoutButton type="button">Sign Out</SignoutButton>
+      <SignoutButton type="button" onClick={onSignOut}>
+        Sign Out
+      </SignoutButton>
     </HeaderWrapper>
   );
 };

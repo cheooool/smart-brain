@@ -34,27 +34,12 @@ class Signin extends React.Component {
     });
   };
 
-  onSubmitSignIn = async e => {
+  onSubmitSignIn = e => {
     e.preventDefault();
-
-    try {
-      const response = await fetch('http://localhost:3000/signin', {
-        method: 'post',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: this.state.signInEmail,
-          password: this.state.signInPassword
-        })
-      });
-      const user = await response.json();
-
-      if (user.id) {
-        this.props.loadUser(user);
-        this.props.onRouteFrom();
-      }
-    } catch (e) {
-      console.log(e);
-    }
+    this.props.onSignIn({
+      email: this.state.signInEmail,
+      password: this.state.signInPassword
+    });
   };
 
   render() {
