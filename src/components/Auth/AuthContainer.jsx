@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { signInAction } from '../../actions/auth';
+import { signInAction, registerAction } from '../../actions/auth';
 import styled from 'styled-components';
 import Signin from './Signin';
 import Register from './Register';
@@ -16,7 +16,7 @@ const Container = styled.div`
 class AuthContainer extends Component {
   render() {
     const { pathname } = this.props.location;
-    const { loadUser, onSignIn, user } = this.props;
+    const { onSignIn, onRegister, user } = this.props;
 
     if (user) {
       return <Redirect to="/" />;
@@ -27,7 +27,7 @@ class AuthContainer extends Component {
         {pathname === '/login' ? (
           <Signin onSignIn={onSignIn} />
         ) : (
-          <Register onRouteFrom={this.onRouteFrom} loadUser={loadUser} />
+          <Register onRegister={onRegister} />
         )}
       </Container>
     );
@@ -43,7 +43,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onSignIn: ({ email, password }) =>
-      dispatch(signInAction({ email, password }))
+      dispatch(signInAction({ email, password })),
+    onRegister: ({ name, email, password }) =>
+      dispatch(registerAction({ name, email, password }))
   };
 };
 
