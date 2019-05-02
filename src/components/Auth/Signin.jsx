@@ -10,6 +10,7 @@ import {
   Legend,
   Field
 } from '../shared';
+import axios from 'axios';
 
 class Signin extends React.Component {
   constructor(props) {
@@ -38,16 +39,11 @@ class Signin extends React.Component {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:3000/signin', {
-        method: 'post',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: this.state.signInEmail,
-          password: this.state.signInPassword
-        })
+      const response = await axios.post('http://localhost:3000/signin', {
+        email: this.state.signInEmail,
+        password: this.state.signInPassword
       });
-      const user = await response.json();
-
+      const user = await response.data;
       if (user.id) {
         this.props.loadUser(user);
         this.props.onRouteFrom();
