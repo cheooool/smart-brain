@@ -1,8 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import DetectCounter from './DetectCounter';
+import { Button } from '../shared';
 
 const FaceRecognitionWrapper = styled.div`
   padding: 0 1em;
+  text-align: center;
 `;
 const ImageBox = styled.div`
   position: relative;
@@ -24,7 +27,11 @@ const BoundingBox = styled.div`
   bottom: ${props => (props.bottom ? props.bottom + '%' : '')};
   left: ${props => (props.left ? props.left + '%' : '')};
 `;
-const FaceRecognition = ({ imageUrl, boxes }) => {
+
+const FaceRecognition = ({ imageUrl, boxes, onClear, finished }) => {
+  if (!imageUrl) {
+    return null;
+  }
   return (
     <FaceRecognitionWrapper>
       <ImageBox>
@@ -34,6 +41,14 @@ const FaceRecognition = ({ imageUrl, boxes }) => {
           return <BoundingBox key={index} {...box} />;
         })}
       </ImageBox>
+      {finished && (
+        <>
+          <DetectCounter counter={boxes.length} />
+          <Button type="button" onClick={onClear}>
+            Clear
+          </Button>
+        </>
+      )}
     </FaceRecognitionWrapper>
   );
 };
