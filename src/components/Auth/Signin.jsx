@@ -10,7 +10,6 @@ import {
   Legend,
   Field
 } from '../shared';
-import axios from 'axios';
 
 class Signin extends React.Component {
   constructor(props) {
@@ -35,22 +34,12 @@ class Signin extends React.Component {
     });
   };
 
-  onSubmitSignIn = async e => {
+  onSubmitSignIn = e => {
     e.preventDefault();
-
-    try {
-      const response = await axios.post('http://localhost:3000/signin', {
-        email: this.state.signInEmail,
-        password: this.state.signInPassword
-      });
-      const user = await response.data;
-      if (user.id) {
-        this.props.loadUser(user);
-        this.props.onRouteFrom();
-      }
-    } catch (e) {
-      console.log(e);
-    }
+    this.props.onSignIn({
+      email: this.state.signInEmail,
+      password: this.state.signInPassword
+    });
   };
 
   render() {
