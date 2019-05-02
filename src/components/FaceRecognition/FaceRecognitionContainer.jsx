@@ -4,6 +4,14 @@ import Counter from '../Counter/Counter';
 import ImageLinkForm from '../ImageLinkForm/ImageLinkForm';
 import FaceRecognition from './FaceRecognition';
 import DetectCounter from './DetectCounter';
+import { Button } from '../shared';
+
+const initialState = {
+  loading: false,
+  boxes: [],
+  linkInput: '',
+  imageUrl: ''
+};
 
 class FaceRecognitionContainer extends Component {
   state = {
@@ -59,16 +67,15 @@ class FaceRecognitionContainer extends Component {
   };
 
   clearData = () => {
-    this.setState({ boxes: [] });
-    this.setState({ imageUrl: '' });
+    this.setState(initialState);
   };
 
   onDetectSubmit = async e => {
     e.preventDefault();
-    this.clearData();
     this.setState({
       loading: true,
-      imageUrl: this.state.linkInput
+      imageUrl: this.state.linkInput,
+      boxes: []
     });
     const { user } = this.props;
 
@@ -108,18 +115,24 @@ class FaceRecognitionContainer extends Component {
   };
 
   render() {
-    const { loading, boxes, imageUrl } = this.state;
+    const { loading, boxes, imageUrl, linkInput } = this.state;
     return (
       <>
         <Header />
         {/* <Counter name={user.name} entries={user.entries} /> */}
         <ImageLinkForm
+          value={linkInput}
           onInputChange={this.onInputChange}
           onDetectSubmit={this.onDetectSubmit}
         />
         {imageUrl && <FaceRecognition boxes={boxes} imageUrl={imageUrl} />}
         {(loading || boxes.length > 0) && (
           <DetectCounter counter={boxes.length} />
+        )}
+        {imageUrl && (
+          <Button type="button" onClick={this.clearData}>
+            Clear
+          </Button>
         )}
       </>
     );
