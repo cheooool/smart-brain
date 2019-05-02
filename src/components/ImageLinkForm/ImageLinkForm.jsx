@@ -5,6 +5,7 @@ import { TextInput, Button } from '../shared';
 const LinkWrapper = styled.div`
   width: 100%;
   padding: 1em;
+  box-sizing: border-box;
 `;
 const LinkForm = styled.form`
   position: relative;
