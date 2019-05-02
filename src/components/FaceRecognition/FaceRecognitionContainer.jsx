@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Header from '../Header/Header';
-import Counter from '../Counter/Counter';
 import ImageLinkForm from '../ImageLinkForm/ImageLinkForm';
 import FaceRecognition from './FaceRecognition';
 import DetectCounter from './DetectCounter';
@@ -119,7 +118,6 @@ class FaceRecognitionContainer extends Component {
     return (
       <>
         <Header />
-        {/* <Counter name={user.name} entries={user.entries} /> */}
         <ImageLinkForm
           value={linkInput}
           onInputChange={this.onInputChange}
