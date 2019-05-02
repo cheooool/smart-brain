@@ -3,6 +3,7 @@ import Header from '../Header/Header';
 import Counter from '../Counter/Counter';
 import ImageLinkForm from '../ImageLinkForm/ImageLinkForm';
 import FaceRecognition from './FaceRecognition';
+import DetectCounter from './DetectCounter';
 
 class FaceRecognitionContainer extends Component {
   state = {
@@ -18,18 +19,31 @@ class FaceRecognitionContainer extends Component {
     });
   };
 
+  convertToPercent = num1 => num2 => (num2 / num1) * 100;
+
   calculateFaceLocation = region => {
     const clarifaiFace = region.region_info.bounding_box;
-    const image = document.getElementById('inputimage');
+    const image = document.getElementById('inputImage');
     const width = Number(image.width);
     const height = Number(image.height);
 
-    return {
-      leftCol: clarifaiFace.left_col * width,
-      topRow: clarifaiFace.top_row * height,
-      rightCol: width - clarifaiFace.right_col * width,
-      bottomRow: height - clarifaiFace.bottom_row * height
+    const positions = {
+      top: clarifaiFace.top_row * height,
+      right: width - clarifaiFace.right_col * width,
+      bottom: height - clarifaiFace.bottom_row * height,
+      left: clarifaiFace.left_col * width
     };
+
+    const convertWidthTo = this.convertToPercent(width);
+    const convertHeightTo = this.convertToPercent(height);
+    const convertToPercent = {
+      top: convertHeightTo(positions.top),
+      right: convertWidthTo(positions.right),
+      bottom: convertHeightTo(positions.bottom),
+      left: convertWidthTo(positions.left)
+    };
+
+    return convertToPercent;
   };
 
   displayFaceBoxes = boxes => {
@@ -74,9 +88,9 @@ class FaceRecognitionContainer extends Component {
       });
 
       const entriesData = entriesResponse.json();
-      console.log(entriesData);
 
-      this.displayFaceBoxed(this.getFaceLocations(clarifaiData));
+      const boxesPosition = this.getFaceLocations(clarifaiData);
+      this.displayFaceBoxes(boxesPosition);
     }
   };
 
@@ -91,6 +105,7 @@ class FaceRecognitionContainer extends Component {
           onDetectSubmit={this.onDetectSubmit}
         />
         <FaceRecognition boxes={boxes} imageUrl={imageUrl} />
+        {boxes.length > 0 && <DetectCounter counter={boxes.length} />}
       </>
     );
   }
