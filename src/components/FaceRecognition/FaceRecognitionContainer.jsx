@@ -8,7 +8,8 @@ import Spinner from '../Spinner/Spinner';
 
 import {
   requestFaceRecognition,
-  changeLinkInputAction
+  changeLinkInputAction,
+  clearFaceRecognition
 } from '../../actions/faceRecognition';
 
 class FaceRecognitionContainer extends Component {
@@ -59,11 +60,19 @@ class FaceRecognitionContainer extends Component {
   };
 
   render() {
-    const { onSignOut, pending, imageUrl, clarifaiData } = this.props;
+    const {
+      onSignOut,
+      onClearData,
+      pending,
+      imageUrl,
+      linkInput,
+      clarifaiData
+    } = this.props;
     return (
       <>
         <Header onSignOut={onSignOut} />
         <ImageLinkForm
+          value={linkInput}
           onInputChange={this.onInputChange}
           onDetectSubmit={this.onDetectSubmit}
         />
@@ -71,6 +80,7 @@ class FaceRecognitionContainer extends Component {
           boxes={this.getFaceLocations(clarifaiData)}
           imageUrl={imageUrl}
           finished={!pending}
+          onClear={onClearData}
         />
         <Spinner visible={pending} />
       </>
@@ -98,7 +108,8 @@ const mapDispatchToProps = dispatch => {
     onSignOut: () => dispatch(signOutAction()),
     onRequestFaceRecognition: input =>
       dispatch(requestFaceRecognition({ input })),
-    onLinkInputChange: input => dispatch(changeLinkInputAction({ input }))
+    onLinkInputChange: input => dispatch(changeLinkInputAction({ input })),
+    onClearData: () => dispatch(clearFaceRecognition())
   };
 };
 export default connect(

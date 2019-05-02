@@ -3,7 +3,8 @@ import {
   REQUEST_FACE_RECOGNITION_FAILED,
   REQUEST_FACE_RECOGNITION_PENDING,
   UPDATE_IMAGE_URL,
-  CHANGE_LINK_INPUT
+  CHANGE_LINK_INPUT,
+  CLEAR_FACE_RECOGNITION
 } from '../actions/faceRecognition';
 
 const initialState = {
@@ -38,6 +39,8 @@ const faceRecognitionReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         linkInput: action.payload
       });
+    case CLEAR_FACE_RECOGNITION:
+      return initialState;
     default:
       return state;
   }

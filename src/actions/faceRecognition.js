@@ -9,6 +9,13 @@ export const REQUEST_FACE_RECOGNITION_FAILED =
   'REQUEST_FACE_RECOGNITION_FAILED';
 export const UPDATE_IMAGE_URL = 'CHANGE_IMAGE_URL';
 export const CHANGE_LINK_INPUT = 'CHANGE_LINK_INPUT';
+export const CLEAR_FACE_RECOGNITION = 'CLEAR_FACE_RECOGNITION';
+
+export const clearFaceRecognition = () => {
+  return {
+    type: CLEAR_FACE_RECOGNITION
+  };
+};
 
 export const changeLinkInputAction = ({ input }) => {
   return {
