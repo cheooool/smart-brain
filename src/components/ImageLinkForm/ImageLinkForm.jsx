@@ -1,27 +1,43 @@
 import React from 'react';
-import './ImageLinkForm.css';
-const ImageLinkForm = ({ onInputChange, onButtonSubmit }) => {
+import styled from 'styled-components';
+import { TextInput, Button } from '../shared';
+
+const LinkWrapper = styled.div`
+  width: 100%;
+  padding: 1em;
+`;
+const LinkForm = styled.form`
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+const LinkInput = styled(TextInput)`
+  padding-right: 5.4em;
+`;
+const DetectButton = styled(Button)`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  margin: 0;
+  padding: 0.5em;
+`;
+
+const ImageLinkForm = ({ value, onDetectSubmit, onInputChange }) => {
   return (
-    <div>
-      <p className="f3">
-        {'This Magic Brain will detect faces in your pictures. Git it a try.'}
-      </p>
-      <div className="center">
-        <div className="form center pa4 br3 shadow-5">
-          <input
-            className="f4 pa2 w-70 center"
-            type="text"
-            onChange={onInputChange}
-          />
-          <button
-            className="w-30 grow f4 link ph3 pv2 dib white bg-light-purple"
-            onClick={onButtonSubmit}
-          >
-            Detect
-          </button>
-        </div>
-      </div>
-    </div>
+    <LinkWrapper>
+      <LinkForm onSubmit={onDetectSubmit}>
+        <LinkInput
+          type="text"
+          name="linkInput"
+          id="linkInput"
+          placeholder="Image Url..."
+          value={value}
+          onChange={onInputChange}
+        />
+        <DetectButton type="submit">Detect</DetectButton>
+      </LinkForm>
+    </LinkWrapper>
   );
 };
 
