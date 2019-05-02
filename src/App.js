@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
+import Particles from 'react-particles-js';
 import AuthContainer from './components/Auth/AuthContainer';
 import FaceRecognitionContainer from './components/FaceRecognition/FaceRecognitionContainer';
 import './App.css';
@@ -18,17 +19,26 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-// const particlesOptions = {
-//   particles: {
-//     number: {
-//       value: 120,
-//       density: {
-//         enable: true,
-//         value_area: 800
-//       }
-//     }
-//   }
-// };
+const ParticlesWrapper = styled(Particles)`
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+`;
+
+const particlesOptions = {
+  particles: {
+    number: {
+      value: 120,
+      density: {
+        enable: true,
+        value_area: 800
+      }
+    }
+  }
+};
 
 class App extends Component {
   constructor() {
@@ -64,7 +74,7 @@ class App extends Component {
 
   render() {
     const { user } = this.state;
-
+    console.log(user);
     return (
       <div className="App">
         <GlobalStyle />
@@ -96,7 +106,7 @@ class App extends Component {
             authenticated={this.state.user.id !== ''}
           />
         </Router>
-        {/* <Particles className="particles" params={particlesOptions} /> */}
+        <ParticlesWrapper params={particlesOptions} />
       </div>
     );
   }
