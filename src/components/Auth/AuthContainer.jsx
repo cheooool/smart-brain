@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { signInAction } from '../../actions/auth';
 import styled from 'styled-components';
 import Signin from './Signin';
 import Register from './Register';
@@ -12,18 +14,18 @@ const Container = styled.div`
 `;
 
 class AuthContainer extends Component {
-  onRouteFrom = () => {
-    const { from } = this.props.location.state || { from: { pathname: '/' } };
-    this.props.history.push(from);
-  };
   render() {
     const { pathname } = this.props.location;
-    const { loadUser } = this.props;
+    const { loadUser, onSignIn, user } = this.props;
+
+    if (user) {
+      return <Redirect to="/" />;
+    }
 
     return (
       <Container>
         {pathname === '/login' ? (
-          <Signin onRouteFrom={this.onRouteFrom} loadUser={loadUser} />
+          <Signin onSignIn={onSignIn} />
         ) : (
           <Register onRouteFrom={this.onRouteFrom} loadUser={loadUser} />
         )}
@@ -32,4 +34,20 @@ class AuthContainer extends Component {
   }
 }
 
-export default withRouter(AuthContainer);
+const mapStateToProps = state => {
+  return {
+    user: state.authReducer.user
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onSignIn: ({ email, password }) =>
+      dispatch(signInAction({ email, password }))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(AuthContainer));
