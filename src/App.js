@@ -69,7 +69,7 @@ class App extends Component {
             authenticated={authenticated}
           />
         </Router>
-        {/* <ParticlesWrapper params={particlesOptions} /> */}
+        <ParticlesWrapper params={particlesOptions} />
       </div>
     );
   }
