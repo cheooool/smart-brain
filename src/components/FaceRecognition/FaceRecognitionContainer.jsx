@@ -4,9 +4,11 @@ import Counter from '../Counter/Counter';
 import ImageLinkForm from '../ImageLinkForm/ImageLinkForm';
 import FaceRecognition from './FaceRecognition';
 import DetectCounter from './DetectCounter';
+import Spinner from '../Spinner/Spinner';
 
 class FaceRecognitionContainer extends Component {
   state = {
+    loading: false,
     boxes: [],
     linkInput: '',
     imageUrl: ''
@@ -66,6 +68,7 @@ class FaceRecognitionContainer extends Component {
     e.preventDefault();
     this.clearData();
     this.setState({
+      loading: true,
       imageUrl: this.state.linkInput
     });
     const { user } = this.props;
@@ -91,11 +94,14 @@ class FaceRecognitionContainer extends Component {
 
       const boxesPosition = this.getFaceLocations(clarifaiData);
       this.displayFaceBoxes(boxesPosition);
+      this.setState({
+        loading: false
+      });
     }
   };
 
   render() {
-    const { boxes, imageUrl } = this.state;
+    const { loading, boxes, imageUrl } = this.state;
     return (
       <>
         <Header />
@@ -105,7 +111,9 @@ class FaceRecognitionContainer extends Component {
           onDetectSubmit={this.onDetectSubmit}
         />
         {imageUrl && <FaceRecognition boxes={boxes} imageUrl={imageUrl} />}
-        {boxes.length > 0 && <DetectCounter counter={boxes.length} />}
+        {(loading || boxes.length > 0) && (
+          <DetectCounter counter={boxes.length} />
+        )}
       </>
     );
   }
