@@ -23,3 +23,23 @@ export const signInAction = ({ email, password }) => async dispatch => {
     });
   }
 };
+
+export const registerAction = ({ name, email, password }) => async dispatch => {
+  dispatch({ type: AUTHENTICATED_PENDING });
+  try {
+    const response = await axios.post(`${api}/register`, {
+      name,
+      email,
+      password
+    });
+    const user = response.data;
+    dispatch({
+      type: AUTHENTICATED_SUCCESS,
+      payload: user
+    });
+  } catch (e) {
+    dispatch({
+      type: AUTHENTICATED_FAILED
+    });
+  }
+};
