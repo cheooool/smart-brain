@@ -29,20 +29,24 @@ class Register extends React.Component {
 
   onSubmit = async e => {
     e.preventDefault();
-    const response = await fetch('http://localhost:3000/register', {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: this.state.email,
-        password: this.state.password,
-        name: this.state.name
-      })
-    });
-    const user = await response.json();
+    try {
+      const response = await fetch('http://localhost:3000/register', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: this.state.email,
+          password: this.state.password,
+          name: this.state.name
+        })
+      });
+      const user = await response.json();
 
-    if (user.id) {
-      this.props.loadUser(user);
-      this.props.onRouteFrom();
+      if (user.id) {
+        this.props.loadUser(user);
+        this.props.onRouteFrom();
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
   render() {
