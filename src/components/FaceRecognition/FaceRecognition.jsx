@@ -26,17 +26,15 @@ const BoundingBox = styled.div`
 `;
 const FaceRecognition = ({ imageUrl, boxes }) => {
   return (
-    <>
-      <FaceRecognitionWrapper>
-        <ImageBox>
-          <Image id="inputImage" src={imageUrl} alt="사진" />
+    <FaceRecognitionWrapper>
+      <ImageBox>
+        <Image id="inputImage" src={imageUrl} alt="사진" />
 
-          {boxes.map((box, index) => {
-            return <BoundingBox key={index} {...box} />;
-          })}
-        </ImageBox>
-      </FaceRecognitionWrapper>
-    </>
+        {boxes.map((box, index) => {
+          return <BoundingBox key={index} {...box} />;
+        })}
+      </ImageBox>
+    </FaceRecognitionWrapper>
   );
 };
 
