@@ -17,7 +17,9 @@ const faceRecognitionReducer = (state = initialState, action) => {
   switch (action.type) {
     case REQUEST_FACE_RECOGNITION_PENDING:
       return Object.assign({}, state, {
-        pending: true
+        pending: true,
+        clarifaiData: null,
+        imageUrl: ''
       });
     case REQUEST_FACE_RECOGNITION_SUCCESS:
       return Object.assign({}, state, {
