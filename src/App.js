@@ -6,7 +6,6 @@ import styled, { createGlobalStyle } from 'styled-components';
 import Particles from 'react-particles-js';
 import AuthContainer from './components/Auth/AuthContainer';
 import FaceRecognitionContainer from './components/FaceRecognition/FaceRecognitionContainer';
-import './App.css';
 
 const GlobalStyle = createGlobalStyle`
   html {
