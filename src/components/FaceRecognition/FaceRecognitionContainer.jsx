@@ -4,7 +4,6 @@ import Counter from '../Counter/Counter';
 import ImageLinkForm from '../ImageLinkForm/ImageLinkForm';
 import FaceRecognition from './FaceRecognition';
 import DetectCounter from './DetectCounter';
-import Spinner from '../Spinner/Spinner';
 
 class FaceRecognitionContainer extends Component {
   state = {
@@ -72,28 +71,36 @@ class FaceRecognitionContainer extends Component {
       imageUrl: this.state.linkInput
     });
     const { user } = this.props;
-    const clarifaiResponse = await fetch('http://localhost:3000/imageurl', {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        input: this.state.linkInput
-      })
-    });
-    const clarifaiData = await clarifaiResponse.json();
 
-    if (clarifaiData) {
-      const entriesResponse = await fetch('http://localhost:3000/image', {
-        method: 'put',
+    try {
+      const clarifaiResponse = await fetch('http://localhost:3000/imageurl', {
+        method: 'post',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          id: user.id
+          input: this.state.linkInput
         })
       });
+      const clarifaiData = await clarifaiResponse.json();
 
-      const entriesData = entriesResponse.json();
+      if (clarifaiData) {
+        const entriesResponse = await fetch('http://localhost:3000/image', {
+          method: 'put',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id: user.id
+          })
+        });
 
-      const boxesPosition = this.getFaceLocations(clarifaiData);
-      this.displayFaceBoxes(boxesPosition);
+        const entriesData = entriesResponse.json();
+
+        const boxesPosition = this.getFaceLocations(clarifaiData);
+        this.displayFaceBoxes(boxesPosition);
+        this.setState({
+          loading: false
+        });
+      }
+    } catch (e) {
+      console.log(e);
       this.setState({
         loading: false
       });
