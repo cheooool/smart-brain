@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Spinner from '../Spinner/Spinner';
 
 const DetectWrapper = styled.div`
   padding: 1em;
@@ -16,6 +17,9 @@ const CounterText = styled.strong`
 `;
 
 const DetectCounter = ({ counter }) => {
+  if (!counter) {
+    return <Spinner />;
+  }
   return (
     <DetectWrapper>
       <DetectText>
