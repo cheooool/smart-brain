@@ -50,7 +50,8 @@ export const registerAction = ({ name, email, password }) => async dispatch => {
     });
   } catch (e) {
     dispatch({
-      type: AUTHENTICATED_FAILED
+      type: AUTHENTICATED_FAILED,
+      payload: e.response.data
     });
   }
 };
