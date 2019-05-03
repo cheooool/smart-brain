@@ -7,5 +7,17 @@ import Fieldset from './Fieldset';
 import Field from './Field';
 import Legend from './Legend';
 import Link from './Link';
+import Alert from './Alert';
 
-export { Anchor, Button, Text, TextInput, Form, Field, Legend, Fieldset, Link };
+export {
+  Anchor,
+  Button,
+  Text,
+  TextInput,
+  Form,
+  Field,
+  Legend,
+  Fieldset,
+  Link,
+  Alert
+};
