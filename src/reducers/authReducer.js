@@ -2,13 +2,15 @@ import {
   AUTHENTICATED_SUCCESS,
   AUTHENTICATED_FAILED,
   AUTHENTICATED_PENDING,
-  UNAUTHENTICATED
+  UNAUTHENTICATED,
+  CLEAR_ERROR_MESSAGES
 } from '../actions/auth';
 
 const initialState = {
   pending: false,
   authenticated: false,
-  user: null
+  user: null,
+  errorMessages: []
 };
 
 const AuthReducer = (state = initialState, action) => {
@@ -25,10 +27,15 @@ const AuthReducer = (state = initialState, action) => {
       });
     case AUTHENTICATED_FAILED:
       return Object.assign({}, state, {
-        pending: false
+        pending: false,
+        errorMessages: [...state.errorMessages, action.payload]
       });
     case UNAUTHENTICATED:
       return initialState;
+    case CLEAR_ERROR_MESSAGES:
+      return Object.assign({}, state, {
+        errorMessages: []
+      });
     default:
       return state;
   }

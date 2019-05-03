@@ -7,7 +7,8 @@ import {
   Fieldset,
   Legend,
   Field,
-  Link
+  Link,
+  Alert
 } from '../shared';
 
 class Register extends React.Component {
@@ -18,6 +19,10 @@ class Register extends React.Component {
       password: '',
       name: ''
     };
+  }
+
+  componentDidMount() {
+    this.props.onClearError();
   }
 
   onInputChange = event => {
@@ -37,6 +42,7 @@ class Register extends React.Component {
     });
   };
   render() {
+    const { error } = this.props;
     return (
       <Form onSubmit={this.onSubmit}>
         <Fieldset>
@@ -70,6 +76,13 @@ class Register extends React.Component {
               onChange={this.onInputChange}
             />
           </Field>
+          {error.map((message, index) => {
+            return (
+              <Alert className="error" key={index}>
+                {message}
+              </Alert>
+            );
+          })}
           <Button type="submit">Register</Button>
           <Text size="0.875em">
             이미 ID가 있으신가요? <Link to="/login">Sign In</Link>

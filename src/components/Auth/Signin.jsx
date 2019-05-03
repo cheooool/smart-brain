@@ -8,7 +8,8 @@ import {
   Form,
   Fieldset,
   Legend,
-  Field
+  Field,
+  Alert
 } from '../shared';
 
 class Signin extends React.Component {
@@ -18,6 +19,9 @@ class Signin extends React.Component {
       signInEmail: '',
       signInPassword: ''
     };
+  }
+  componentDidMount() {
+    this.props.onClearError();
   }
   onEmailChange = event => {
     this.setState({ signInEmail: event.target.value });
@@ -43,6 +47,7 @@ class Signin extends React.Component {
   };
 
   render() {
+    const { error } = this.props;
     return (
       <Form onSubmit={this.onSubmitSignIn}>
         <Fieldset>
@@ -69,6 +74,13 @@ class Signin extends React.Component {
             />
           </Field>
         </Fieldset>
+        {error.map((message, index) => {
+          return (
+            <Alert className="error" key={index}>
+              {message}
+            </Alert>
+          );
+        })}
         <Button type="submit">Sign In</Button>
         <Text size="0.875em">
           ID가 없으신가요? <Link to="/register">Register</Link>
