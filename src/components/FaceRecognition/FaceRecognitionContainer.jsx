@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { signOutAction } from '../../actions/auth';
+import styled from 'styled-components';
 import Header from '../Header/Header';
 import ImageLinkForm from '../ImageLinkForm/ImageLinkForm';
 import FaceRecognition from './FaceRecognition';
@@ -12,6 +13,10 @@ import {
   clearFaceRecognition
 } from '../../actions/faceRecognition';
 
+const FaceRecognitionWrapper = styled.div`
+  max-width: 960px;
+  margin: 0 auto;
+`;
 class FaceRecognitionContainer extends Component {
   convertToPercent = num1 => num2 => (num2 / num1) * 100;
 
@@ -72,18 +77,20 @@ class FaceRecognitionContainer extends Component {
     return (
       <>
         <Header user={user} onSignOut={onSignOut} />
-        <ImageLinkForm
-          value={linkInput}
-          onInputChange={this.onInputChange}
-          onDetectSubmit={this.onDetectSubmit}
-        />
-        <FaceRecognition
-          boxes={this.getFaceLocations(clarifaiData)}
-          imageUrl={imageUrl}
-          finished={!pending}
-          onClear={onClearData}
-        />
-        <Spinner visible={pending} />
+        <FaceRecognitionWrapper>
+          <ImageLinkForm
+            value={linkInput}
+            onInputChange={this.onInputChange}
+            onDetectSubmit={this.onDetectSubmit}
+          />
+          <FaceRecognition
+            boxes={this.getFaceLocations(clarifaiData)}
+            imageUrl={imageUrl}
+            finished={!pending}
+            onClear={onClearData}
+          />
+          <Spinner visible={pending} />
+        </FaceRecognitionWrapper>
       </>
     );
   }
