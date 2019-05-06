@@ -1,6 +1,8 @@
 import axios from 'axios';
 import api from '../api';
 
+import { updateEntries } from './auth';
+
 export const REQUEST_FACE_RECOGNITION_PENDING =
   'REQUEST_FACE_RECOGNITION_PENDING';
 export const REQUEST_FACE_RECOGNITION_SUCCESS =
@@ -47,12 +49,14 @@ export const requestFaceRecognition = ({ input }) => async (
       const entriesResponse = await axios.put(`${api}/image`, {
         id: user.id
       });
-    }
+      const entriesData = await entriesResponse.data;
 
-    dispatch({
-      type: REQUEST_FACE_RECOGNITION_SUCCESS,
-      payload: clarifaiData
-    });
+      dispatch({
+        type: REQUEST_FACE_RECOGNITION_SUCCESS,
+        payload: clarifaiData
+      });
+      dispatch(updateEntries(entriesData));
+    }
   } catch (e) {
     dispatch({
       type: REQUEST_FACE_RECOGNITION_FAILED

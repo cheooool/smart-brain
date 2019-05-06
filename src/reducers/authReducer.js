@@ -3,7 +3,8 @@ import {
   AUTHENTICATED_FAILED,
   AUTHENTICATED_PENDING,
   UNAUTHENTICATED,
-  CLEAR_ERROR_MESSAGES
+  CLEAR_ERROR_MESSAGES,
+  UPDATE_ENTRIES
 } from '../actions/auth';
 
 const initialState = {
@@ -35,6 +36,13 @@ const AuthReducer = (state = initialState, action) => {
     case CLEAR_ERROR_MESSAGES:
       return Object.assign({}, state, {
         errorMessages: []
+      });
+    case UPDATE_ENTRIES:
+      return Object.assign({}, state, {
+        user: {
+          ...state.user,
+          entries: action.payload
+        }
       });
     default:
       return state;
