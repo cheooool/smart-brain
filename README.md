@@ -11,6 +11,7 @@ Heroku에 배포되어있으며 아래의 기술을 사용되었습니다.
 - React
 - Redux/Redux-thunk
 - Styled-components
+- axios
 
 ##### BACK-END ([Smart-brain-api](https://github.com/cheooool/smart-brain-api))
 
