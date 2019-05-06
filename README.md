@@ -1,12 +1,19 @@
 # Smart brain
 
-사진안의 얼굴 인식 기능 [데모사이트](https://smart-brain-hoi.herokuapp.com/)
+이미지 URL을 입력하면 입력한 URL의 사진에서 얼굴을 인식해주는 웹 애플리케이션 [데모사이트](https://smart-brain-hoi.herokuapp.com/)
 
 ## 사용 기술
 
-- React
-- Clarifai
-- node/express
-- postgress/knex
+Heroku에 배포되어있으며 아래의 기술을 사용되었습니다.
 
-[Smart-brain-api](https://github.com/cheooool/smart-brain-api)
+##### FRONT-END ([Smart-brain](https://github.com/cheooool/smart-brain))
+
+- React
+- Redux/Redux-thunk
+- Styled-components
+
+##### BACK-END ([Smart-brain-api](https://github.com/cheooool/smart-brain-api))
+
+- Node.js/express
+- Postgresql/Knex
+- Clarifai API
