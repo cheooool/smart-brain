@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Button } from '../shared';
 
 const ProfileWrapper = styled.div`
   position: relative;
@@ -115,6 +116,12 @@ const CloseButton = styled.button`
   cursor: pointer;
 `;
 
+const SignoutButton = styled(Button)`
+  font-size: 0.75em;
+  border-color: red;
+  color: red;
+`;
+
 class Profile extends Component {
   profile = React.createRef();
 
@@ -126,22 +133,26 @@ class Profile extends Component {
     this.profile.current.classList.remove('open');
   };
   render() {
+    const { user, onSignOut } = this.props;
     return (
       <ProfileWrapper ref={this.profile}>
         <ProfileInner className="inner">
           <ProfileIcon className="icon" onClick={this.onOpen}>
-            <img src={`https://robohash.org/1`} />
+            <img src={`https://robohash.org/${user.id}`} />
           </ProfileIcon>
 
           <ProfileInfo className="info">
             <ul>
-              <li>TEST</li>
-              <li>TESTTESTTEST@email.com</li>
+              <li>{user.name}</li>
+              <li>{user.email}</li>
               <li>
-                검색 횟수<CountNumber>0</CountNumber>
+                검색 횟수<CountNumber>{user.entries}</CountNumber>
               </li>
             </ul>
           </ProfileInfo>
+          <SignoutButton type="button" onClick={onSignOut}>
+            Sign Out
+          </SignoutButton>
           <CloseButton className="close" onClick={this.onClose}>
             X
           </CloseButton>
