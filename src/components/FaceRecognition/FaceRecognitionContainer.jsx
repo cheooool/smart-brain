@@ -63,6 +63,7 @@ class FaceRecognitionContainer extends Component {
     const {
       onSignOut,
       onClearData,
+      user,
       pending,
       imageUrl,
       linkInput,
@@ -70,7 +71,7 @@ class FaceRecognitionContainer extends Component {
     } = this.props;
     return (
       <>
-        <Header onSignOut={onSignOut} />
+        <Header user={user} onSignOut={onSignOut} />
         <ImageLinkForm
           value={linkInput}
           onInputChange={this.onInputChange}
@@ -89,6 +90,7 @@ class FaceRecognitionContainer extends Component {
 }
 
 const mapStateToProps = state => {
+  const { user } = state.authReducer;
   const {
     imageUrl,
     pending,
@@ -96,6 +98,7 @@ const mapStateToProps = state => {
     clarifaiData
   } = state.faceRecognitionReducer;
   return {
+    user,
     linkInput,
     imageUrl,
     pending,

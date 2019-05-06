@@ -6,6 +6,14 @@ export const AUTHENTICATED_FAILED = 'AUTHENTICATED_FAILED';
 export const AUTHENTICATED_PENDING = 'AUTHENTICATED_PENDING';
 export const UNAUTHENTICATED = 'UNAUTHENTICATED';
 export const CLEAR_ERROR_MESSAGES = 'CLEAR_ERROR_MESSAGES';
+export const UPDATE_ENTRIES = 'UPDATE_ENTRIES';
+
+export const updateEntries = entries => {
+  return {
+    type: UPDATE_ENTRIES,
+    payload: entries
+  };
+};
 
 export const clearErrorMessages = () => {
   return {
